@@ -56,6 +56,12 @@ async function run() {
             console.log(result);
             res.send(result)
         })
+
+        app.post('/product',async(req,res)=>{
+            const newProduct=req.body
+            const result=await inventoryCollection.insertOne(newProduct)
+            res.send(result)
+        })
     }
     finally {
 
