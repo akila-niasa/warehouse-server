@@ -99,22 +99,22 @@ async function run() {
             res.send(result)
         })
 
-        app.get('/addProduct',verification,async(req,res)=>{
+        app.get('/addProduct',async(req,res)=>{
             // const tokenInfo=req.headers.authorization
             //    console.log(tokenInfo);
             const decodedEmail=req.decoded.email
             const email = req.query.email
             // console.log(decodedEmail);
             // console.log(email);
-           if(decodedEmail===email){
+        //    if(decodedEmail===email){
             const query = { email: email }
 
             const result=await inventoryCollection.find(query).toArray()
             res.send(result)
-           }
-           else{
-            res.status(403).send({ success: 'UnAuthoraized Access' })
-           }
+        //    }
+        //    else{
+        //     res.status(403).send({ success: 'UnAuthoraized Access' })
+        //    }
         })
 
         app.delete('/addProduct/:id',async(req,res)=>{
