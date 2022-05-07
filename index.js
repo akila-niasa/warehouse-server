@@ -106,15 +106,15 @@ async function run() {
             const email = req.query.email
             // console.log(decodedEmail);
             // console.log(email);
-           if(decodedEmail===email){
+        //    if(decodedEmail===email){
             const query = { email: email }
 
             const result=await inventoryCollection.find(query).toArray()
             res.send(result)
-           }
-           else{
-            res.status(403).send({ success: 'UnAuthoraized Access' })
-           }
+        //    }
+        //    else{
+        //     res.status(403).send({ success: 'UnAuthoraized Access' })
+        //    }
         })
 
         app.delete('/addProduct/:id',async(req,res)=>{
