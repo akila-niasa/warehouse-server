@@ -19,21 +19,21 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 //   client.close();
 // });
 
-// function verification(req, res, next) {
-//     const tokenInfo = req.headers.authorization
-//     // console.log(tokenInfo);
-//     if (!tokenInfo) {
-//         return res.status(401).send({ message: 'not found' })
-//     }
-//     const token = tokenInfo.split(' ')[1]
-//     jwt.verify(token, process.env.ACCESS_TOKEN, (err, decoded) => {
-//         if (err) {
-//             return res.status(403).send({ message: "error found" })
-//         }
-//         req.decoded = decoded
-//         next()
-//     })
-// }
+function verification(req, res, next) {
+    const tokenInfo = req.headers.authorization
+    // console.log(tokenInfo);
+    if (!tokenInfo) {
+        return res.status(401).send({ message: 'not found' })
+    }
+    const token = tokenInfo.split(' ')[1]
+    jwt.verify(token, process.env.ACCESS_TOKEN, (err, decoded) => {
+        if (err) {
+            return res.status(403).send({ message: "error found" })
+        }
+        req.decoded = decoded
+        next()
+    })
+}
 
 async function run() {
     try {
@@ -99,22 +99,22 @@ async function run() {
             res.send(result)
         })
 
-        app.get('/addProduct',async(req,res)=>{
+        app.get('/addProduct',verification,async(req,res)=>{
             // const tokenInfo=req.headers.authorization
             //    console.log(tokenInfo);
-            // const decodedEmail=req.decoded.email
+            const decodedEmail=req.decoded.email
             const email = req.query.email
             // console.log(decodedEmail);
             // console.log(email);
-        //    if(decodedEmail===email){
+           if(decodedEmail===email){
             const query = { email: email }
 
             const result=await inventoryCollection.find(query).toArray()
             res.send(result)
-        //    }
-        //    else{
-        //     res.status(403).send({ success: 'UnAuthoraized Access' })
-        //    }
+           }
+           else{
+            res.status(403).send({ success: 'UnAuthoraized Access' })
+           }
         })
 
         app.delete('/addProduct/:id',async(req,res)=>{
