@@ -102,10 +102,10 @@ async function run() {
         app.get('/addProduct',async(req,res)=>{
             // const tokenInfo=req.headers.authorization
             //    console.log(tokenInfo);
-            const decodedEmail=req.decoded.email
+            // const decodedEmail=req.decoded.email
             const email = req.query.email
             // console.log(decodedEmail);
-            console.log(email);
+            // console.log(email);
         //    if(decodedEmail===email){
             const query = { email: email }
 
